@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>SassDoc Docco theme</title><meta name="description" content=""><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="assets/css/main.css"></head><body><section class="item header"><section class="comments package"><h1 class="package__name">sassyicons <span class="package__version">0.1.0</span></h1><p class="package__description">Flexible system to manipulate icons, SVG, PNG, sprites</p></section><section class="code"></section></section><div class="item"><section class="comments"><p class="item__description">Default settings.</p></section><section class="code"><pre class="outer__code"><code class="language-scss">$icons-defaults: ( </code></pre></section><section class="comments inner"><p class="inner__comment">Space around sprites in generated spritemap.<br>Useful with `$offset` parameter.<br>This setting is global for all spritemaps.<br>Can be set per spritemap with the `$spacing` parameter.<br></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  spacing: 0,
+</code></pre></section><section class="comments inner"><p class="inner__comment">Main icons directory. `sprite-map-create()`, base for sub dirs.<br></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  dir: &quot;icons&quot;,
+</code></pre></section><section class="comments inner"><p class="inner__comment">Name of the png sub-folders.<br></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  dir-png: &quot;png&quot;,
+</code></pre></section><section class="comments inner"><p class="inner__comment">Name of the hidpi png sub-folders.<br></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  dir-hidpi: &quot;png_2x&quot;,
+</code></pre></section><section class="comments inner"><p class="inner__comment">Scale of the hidpi pngs.<br></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  hidpi-scale: 2,
+</code></pre></section><section class="comments inner"><p class="inner__comment">Minimum resolution ratio used in the hidpi media query.<br></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  hidpi-ratio: 1.3,
+</code></pre></section><section class="comments inner"><p class="inner__comment">Whether to embed icons as data URI in the `icon-single()` mixin.<br></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  single-embed: true,
+</code></pre></section><section class="comments inner"><p class="inner__comment">Default file format unless overridden by parameter, svg | png.<br></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  format: &quot;svg&quot;,
+</code></pre></section><section class="comments inner"><p class="inner__comment">Whether to support legacy browsers, svg fallback.<br></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  legacy: true
+</code></pre></section><section class="comments"></section><section class="code"><pre class="outer__code"><code class="language-scss">);</code></pre></section></div><!-- .item --><div class="item"><section class="comments"><p class="item__description">User settings. Instanciate the same object in your stylesheets to override defaults.</p></section><section class="code"><pre class="outer__code"><code class="language-scss">$icons-settings: (); </code></pre></section></div><!-- .item --><div class="item"><section class="comments"><p class="item__description">Retrieve a configuration item.</p></section><section class="code"><pre class="outer__code"><code class="language-scss">@function conf($key) {</code></pre></section><section class="comments inner"><p class="inner__comment"></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  @if not map-has-key($icons-defaults, $key) {
+    @warn &quot;No item `#{$key}` found in configuration.&quot;;
+    @return false;
+  }
+  @return map-get(map-merge($icons-defaults, $icons-settings), $key);
+</code></pre></section><section class="comments"></section><section class="code"><pre class="outer__code"><code class="language-scss">}</code></pre></section></div><!-- .item --><div class="item"><section class="comments"><p class="item__description">Helper: join `$list` into a string.</p></section><section class="code"><pre class="outer__code"><code class="language-scss">@function _join($list, $glue: '') {</code></pre></section><section class="comments inner"><p class="inner__comment"></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  $length: length($list);
+  $result: &#39;&#39;;
+  @if $length &lt; 1 {
+    @return $result;
+  }
+  @for $i from 1 through $length {
+    $result: $result
+             + nth($list, $i)
+             + if($i != $length, $glue, &#39;&#39;);
+  }
+  @return $result;
+</code></pre></section><section class="comments"></section><section class="code"><pre class="outer__code"><code class="language-scss">}</code></pre></section></div><!-- .item --><div class="item"><section class="comments"><p class="item__description">Helper: retrieve a spritemap.</p></section><section class="code"><pre class="outer__code"><code class="language-scss">@function _sprite-map-get($name, $factor: 1x) {</code></pre></section><section class="comments inner"><p class="inner__comment"></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  @return map-get(map-get($icons-spritemaps, $name), $factor);
+</code></pre></section><section class="comments"></section><section class="code"><pre class="outer__code"><code class="language-scss">}</code></pre></section></div><!-- .item --><div class="item"><section class="comments"><p class="item__description">Helper: return correct spritemap `background-position`.</p></section><section class="code"><pre class="outer__code"><code class="language-scss">@function _sprite-position($map, $sprite, $offset-x: 0, $offset-y: 0, $scale: 1) {</code></pre></section><section class="comments inner"><p class="inner__comment"></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  $pos: sprite-position($map, $sprite, $offset-x, $offset-y * $scale);
+  @return (nth($pos, 1) nth($pos, 2) / $scale);
+</code></pre></section><section class="comments"></section><section class="code"><pre class="outer__code"><code class="language-scss">}</code></pre></section></div><!-- .item --><div class="item"><section class="comments"><p class="item__description">Hidpi media query builder.</p></section><section class="code"><pre class="outer__code"><code class="language-scss">@mixin hidpi-mq() {</code></pre></section><section class="comments inner"><p class="inner__comment"></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  $hidpi-ratio: conf(hidpi-ratio);
+  @media (-webkit-min-device-pixel-ratio: $hidpi-ratio),
+         (min-resolution: round($hidpi-ratio * 96dpi)),
+         (min-resolution: $hidpi-ratio * 1dppx)
+  {
+    @content;
+  }
+</code></pre></section><section class="comments"></section><section class="code"><pre class="outer__code"><code class="language-scss">}</code></pre></section></div><!-- .item --><div class="item"><section class="comments"><p class="item__description">Boilerplate styles for generated content `:before` or `:after`.</p></section><section class="code"><pre class="outer__code"><code class="language-scss">@mixin generated($width, $height, $top, $right, $bottom, $left) {</code></pre></section><section class="comments inner"><p class="inner__comment"></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  @if $width { width: $width };
+  @if $height { height: $height };
+  content: &quot;&quot;;
+  display: block;
+  position: absolute;
+  @if $top { top: $top; }
+  @if $right { right: $right; }
+  @if $bottom { bottom: $bottom; }
+  @if $left { left: $left; }
+  z-index: 1;
+  @content;
+</code></pre></section><section class="comments"></section><section class="code"><pre class="outer__code"><code class="language-scss">}</code></pre></section></div><!-- .item --><div class="item"><section class="comments"><p class="item__description">Include the icon in a generated pseudo-element. Default to `:before`. Allows for easier positioning or centering.</p></section><section class="code"><pre class="outer__code"><code class="language-scss">@mixin icon-generated($map, $sprite, $pos: 'before', $centered: false, $format: conf(format)) {</code></pre></section><section class="comments inner"><p class="inner__comment"></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  position: relative;
+  &amp;:#{$pos} {
+    $sprite-file: sprite-file(_sprite-map-get($map), $sprite);
+    $width: image-width($sprite-file);
+    $height: image-height($sprite-file);
+    @include generated($width, $height);
+    @if $centered {
+      top: 35%;
+      top: calc(50% - #{$height} / 2);
+      left: 35%;
+      left: calc(50% - #{$width} / 2);
+    }
+    @include icon($map: $map, $sprite: $sprite, $format: $format);
+    @content;
+  }
+</code></pre></section><section class="comments"></section><section class="code"><pre class="outer__code"><code class="language-scss">}</code></pre></section></div><!-- .item --><div class="item"><section class="comments"><p class="item__description">Embed a single icon as inline-image (no spritemap). Should be used sporadically.</p></section><section class="code"><pre class="outer__code"><code class="language-scss">@mixin icon-single($map, $sprite, $format: conf(format)) {</code></pre></section><section class="comments inner"><p class="inner__comment">sprite-file() and inline-image() no work.<br>@see https://github.com/chriseppstein/compass/issues/951<br></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  $dir: conf(dir);
+  $svg-file: _join(($dir, $map, &#39;#{$sprite}.svg&#39;), &#39;/&#39;);
+  $png-file-1x: _join(($dir, $map, conf(dir-png), &#39;#{$sprite}.png&#39;), &#39;/&#39;);
+  $png-file-2x: _join(($dir, $map, conf(dir-hidpi), &#39;#{$sprite}.png&#39;), &#39;/&#39;);
+  $function: if(conf(single-embed), inline-image, image-url);
+  $svg-url: call($function, $svg-file);
+  $png-url-1x: call($function, $png-file-1x);
+  $png-url-2x: call($function, $png-file-2x);
+  $legacy-support: conf(legacy);
+</code></pre></section><section class="comments inner"><p class="inner__comment">Allow to pass format as uppercase.<br></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  $format: to-lower-case($format);
+  @if $format == &#39;svg&#39; {
+    background: {
+      image: $svg-url;
+      repeat: no-repeat;
+    }
+    .svg &amp; {
+      @content;
+    }
+    @if $legacy-support {
+      .no-svg &amp;,
+      .no-js &amp; {
+        background-image: $png-url-1x;
+      }
+    }
+  }
+  @else if $format == &#39;png&#39; {
+    background: {
+      image: $png-url-1x;
+      repeat: no-repeat;
+    }
+    @include hidpi-mq {
+      background: {
+        image: $png-url-2x;
+        size: ceil(image-width($png-file-2x) / conf(hidpi-scale)) auto;
+      }
+    }
+  }
+</code></pre></section><section class="comments"></section><section class="code"><pre class="outer__code"><code class="language-scss">}</code></pre></section></div><!-- .item --><div class="item"><section class="comments"><p class="item__description">Main icon mixin, default choice unless there are specific needs.</p></section><section class="code"><pre class="outer__code"><code class="language-scss">@mixin icon($map, $sprite, $offset: (0 0), $format: conf(format)) {</code></pre></section><section class="comments inner"><p class="inner__comment"></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  $map-1x: _sprite-map-get($map);
+  $map-2x: _sprite-map-get($map, 2x);
+</code></pre></section><section class="comments inner"><p class="inner__comment">Shorter mixin calls.<br></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  $offset-x: nth($offset, 1);
+  $offset-y: nth($offset, length($offset));
+  $legacy-support: conf(legacy);
+</code></pre></section><section class="comments inner"><p class="inner__comment">Allow to pass format as uppercase.<br></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  $format: to-lower-case($format);
+  @if $format == &#39;svg&#39; {
+    $svg-file: _join((conf(dir), $map, &#39;#{$sprite}.svg&#39;), &#39;/&#39;);
+    background: {
+      image: inline-image($svg-file);
+      repeat: no-repeat;
+    }
+    .svg &amp; {
+      @content;
+    }
+    @if $legacy-support {
+      .no-svg &amp;,
+      .no-js &amp; {
+        @extend %sprite-map-#{$map}-image-map;
+        background-position: _sprite-position($map-1x, $sprite, $offset-x, $offset-y);
+      }
+    }
+  }
+  @else if $format == &#39;png&#39; {
+    @extend %sprite-map-#{$map}-image-map;
+    background-position: _sprite-position($map-1x, $sprite, $offset-x, $offset-y);
+    @extend %sprite-map-#{$map}-2x-image-map;
+    @include hidpi-mq {
+      background-position: _sprite-position($map-2x, $sprite, $offset-x, $offset-y, conf(hidpi-scale));
+    }
+  }
+</code></pre></section><section class="comments"></section><section class="code"><pre class="outer__code"><code class="language-scss">}</code></pre></section></div><!-- .item --><div class="item"><section class="comments"><p class="item__description">Spritemaps storage.</p></section><section class="code"><pre class="outer__code"><code class="language-scss">$icons-spritemaps: (); </code></pre></section></div><!-- .item --><div class="item"><section class="comments"><p class="item__description">Create a new spritemap from folder.</p></section><section class="code"><pre class="outer__code"><code class="language-scss">@mixin sprite-map-create($name, $spacing: conf(spacing)) {</code></pre></section><section class="comments inner"><p class="inner__comment"></p></section><section class="code inner"><pre class="inner__code"><code class="language-scss">  $sprites-1x: _join((conf(dir), $name, conf(dir-png), &quot;*.png&quot;), &quot;/&quot;);
+  $sprites-2x: _join((conf(dir), $name, conf(dir-hidpi), &quot;*.png&quot;), &quot;/&quot;);
+  $map-1x: sprite-map($sprites-1x, $spacing: $spacing);
+  $map-2x: sprite-map($sprites-2x, $spacing: $spacing);
+  $new: ($name: (1x: $map-1x, 2x: $map-2x));
+  $icons-spritemaps: map-merge($icons-spritemaps, $new) !global;
+  @at-root %sprite-map-#{$name}-image-map {
+    background: {
+      image: $map-1x;
+      repeat: no-repeat;
+    }
+  }
+  @at-root %sprite-map-#{$name}-2x-image-map {
+    @include hidpi-mq {
+      background: {
+        image: $map-2x;
+        size: ceil(image-width(sprite-path($map-2x)) / conf(hidpi-scale)) auto;
+      }
+    }
+  }
+</code></pre></section><section class="comments"></section><section class="code"><pre class="outer__code"><code class="language-scss">}</code></pre></section></div><!-- .item --><section class="item footer"><section class="comments"></section><section class="code"><pre class="footer__package">+----------------------------------+
+| Package                          |
+|----------------------------------|
+| Name     | sassyicons            |
+| Version  | 0.1.0                 |
+| Author   | Pascal Duez           |
+| Licence  | MIT                   |
+| Homepage | pascalduez/SassyIcons |
++----------------------------------+</pre>/// <a class="footer__watermark" href="http://sassdoc.com">Built with SassDoc</a></section></section><script src="assets/js/main.min.js"></script><script src="assets/js/vendors/prism.min.js"></script></body></html>

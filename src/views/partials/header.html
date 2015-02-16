@@ -1,0 +1,18 @@
+<section class="item header">
+  <section class="comments package">
+    <h1 class="package__name">
+      {{ package.name | default('SassDoc')  }}
+      {% if package.version %}
+      <span class="package__version">
+        {{ package.version }}
+      </span>
+      {% endif %}
+    </h1>
+    {% if package.description %}
+    <p class="package__description">
+      {{ package.description }}
+    </p>
+    {% endif %}
+  </section>
+  <section class="code"></section>
+</section>

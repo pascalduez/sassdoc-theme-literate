@@ -1,0 +1,28 @@
+<section class="comments">
+  {% if item.description %}
+  <p class='item__description'>
+    {{ item.description | trim }}
+  </p>
+  {% endif %}
+</section>
+
+{% set type = item.type | lower %}
+{% set name = item.context.name %}
+{% set isTuple = (type == 'map' or type == 'list') %}
+{% set hasCode = item.context.inner | length %}
+<section class="code">
+  <pre class="outer__code"><code class="language-scss">
+    {%- if name %}${{ name }}:{% endif %}
+    {%- if isTuple and not hasCode %} (); {% endif %}
+    {%- if isTuple and hasCode %} ( {% endif -%}
+  </code></pre>
+</section>
+{% if hasCode %}
+{% include './partials/inner.html' %}
+{% if isTuple %}
+<section class="comments"></section>
+<section class="code">
+  <pre class="outer__code"><code class="language-scss">);</code></pre>
+</section>
+{% endif %}
+{% endif %}

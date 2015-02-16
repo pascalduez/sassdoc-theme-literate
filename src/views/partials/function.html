@@ -1,0 +1,22 @@
+{% import "./partials/utils.html" as utils %}
+
+<section class="comments">
+  {% if item.description %}
+  <p class='item__description'>
+    {{ item.description | trim }}
+  </p>
+  {% endif %}
+</section>
+
+{% set name =  item.context.name %}
+{% set params =  utils.parameters(item) | trim %}
+<section class="code">
+  <pre class="outer__code"><code class="language-scss">@function {{ name }}({{ params }}) {</code></pre>
+</section>
+{%- if item.context.inner %}
+{% include './partials/inner.html' %}
+{% endif -%}
+<section class="comments"></section>
+<section class="code">
+<pre class="outer__code"><code class="language-scss">}</code></pre>
+</section>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include './partials/head.html' %}
+  </head>
+  <body>
+  {% include './partials/header.html' %}
+
+  {% for item in data %}
+    <div class="item">
+    {% include './partials/' + item.context.type + '.html' %}
+    </div><!-- .item -->
+  {% endfor %}
+
+  {% include './partials/footer.html' %}
+
+  {% include './partials/scripts.html' %}
+  </body>
+</html>

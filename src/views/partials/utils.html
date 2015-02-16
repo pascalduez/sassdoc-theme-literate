@@ -1,0 +1,30 @@
+{% macro link(url, text) %}
+  <a href="{{ url }}">{{ text }}</a>
+{% endmacro %}
+
+{% macro script(file, develop) %}
+{% set ext = ".js" if develop else ".min.js" %}
+  <script src="assets/js/{{ file + ext }}"></script>
+{% endmacro %}
+
+{% macro parameters(item) %}
+{% set parameters_string = '' %}
+{% for parameter in item.parameter %}
+  {% set value = '$' + parameter.name %}
+
+  {% if parameter.default %}
+    {% set value = value + ': ' + parameter.default %}
+  {% endif %}
+
+  {% if parameter.type | lower == "arglist" %}
+    {% set value = value + '...' %}
+  {% endif %}
+
+  {% if loop.first %}
+    {% set parameters_string = value %}
+  {% else %}
+    {% set parameters_string = parameters_string + ', ' + value %}
+  {% endif %}
+{% endfor %}
+{{ parameters_string }}
+{% endmacro %}

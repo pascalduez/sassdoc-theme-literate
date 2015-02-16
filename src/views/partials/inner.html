@@ -1,0 +1,8 @@
+{%- for section in item.context.inner %}
+<section class="comments inner">
+  <p class="inner__comment">{{ section.comments | nl2br }}</p>
+</section>
+<section class="code inner">
+  <pre class="inner__code"><code class="language-scss">{{ section.code | escape }}</code></pre>
+</section>
+{% endfor -%}

@@ -73,28 +73,28 @@ pre[class*="language-"] {
 @font-face {
   font-family: 'CamingoCode Regular';
   src: url('../fonts/CamingoCode-Regular.eot');
-  src: url('../fonts/CamingoCode-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/CamingoCode-Regular.woff') format('woff');
+  src: url('../fonts/CamingoCode-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/CamingoCode-Regular.woff2') format('woff'), url('../fonts/CamingoCode-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal; }
 
 @font-face {
   font-family: 'CamingoCode Bold';
   src: url('../fonts/CamingoCode-Bold.eot');
-  src: url('../fonts/CamingoCode-Bold.eot?#iefix') format('embedded-opentype'), url('../fonts/CamingoCode-Bold.woff') format('woff');
+  src: url('../fonts/CamingoCode-Bold.eot?#iefix') format('embedded-opentype'), url('../fonts/CamingoCode-Bold.woff2') format('woff'), url('../fonts/CamingoCode-Bold.woff') format('woff');
   font-weight: normal;
   font-style: normal; }
 
 @font-face {
   font-family: 'CamingoCode Italic';
   src: url('../fonts/CamingoCode-Italic.eot');
-  src: url('../fonts/CamingoCode-Italic.eot?#iefix') format('embedded-opentype'), url('../fonts/CamingoCode-Italic.woff') format('woff');
+  src: url('../fonts/CamingoCode-Italic.eot?#iefix') format('embedded-opentype'), url('../fonts/CamingoCode-Italic.woff2') format('woff'), url('../fonts/CamingoCode-Italic.woff') format('woff');
   font-weight: normal;
   font-style: normal; }
 
 @font-face {
   font-family: 'CamingoCode BoldItalic';
   src: url('../fonts/CamingoCode-BoldItalic.eot');
-  src: url('../fonts/CamingoCode-BoldItalic.eot?#iefix') format('embedded-opentype'), url('../fonts/CamingoCode-BoldItalic.woff') format('woff');
+  src: url('../fonts/CamingoCode-BoldItalic.eot?#iefix') format('embedded-opentype'), url('../fonts/CamingoCode-BoldItalic.woff2') format('woff'), url('../fonts/CamingoCode-BoldItalic.woff') format('woff');
   font-weight: normal;
   font-style: normal; }
 

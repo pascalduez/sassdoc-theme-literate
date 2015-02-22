@@ -1,13 +1,13 @@
 PATH := $(PWD)/node_modules/.bin:$(PATH)
 SOURCE := ./SassyIcons
 SOURCEFILES := ./SassyIcons/stylesheets
-625FLAGS := --playground
+BABELFLAGS := --playground
 
 all: lint dist
 
 esnext:
-	6to5 $(625FLAGS) src/index.js -o dist/index.js
-	6to5 $(625FLAGS) src/lib -d dist/lib
+	babel $(BABELFLAGS) src/index.js -o dist/index.js
+	babel $(BABELFLAGS) src/lib -d dist/lib
 
 dist:
 	trash --force dist

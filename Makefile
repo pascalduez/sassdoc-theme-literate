@@ -39,7 +39,7 @@ lint:
 
 preview: dist
 	rm -rf .sassdoc
-	sassdoc $(SOURCEFILES) -v -t ./dist -d .sassdoc -c $(SOURCE)/config.json
+	sassdoc $(SOURCEFILES) -vt ./dist -d .sassdoc -c $(SOURCE)/config.json
 	gulp deploy
 
 

@@ -4,7 +4,7 @@ import Promise from 'bluebird';
 
 export default function assets(src, dest) {
   return new Promise((resolve, reject) => {
-    vfs.src(join(src, '/**/*.{css,js,svg,png,eot,woff}'))
+    vfs.src(join(src, '/**/*.{css,js,svg,png,eot,woff,woff2,ttf}'))
       .pipe(vfs.dest(join(dest, 'assets')))
       .on('error', reject)
       .on('end', resolve);

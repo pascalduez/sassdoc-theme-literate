@@ -14,7 +14,7 @@ Check out the [preview](http://pascalduez.github.io/sassdoc-theme-literate/).
 
 ## Credits
 
-* [Pascal Duez](https://twitter.com/pascalduez)
+* [Pascal Duez](https://github.com/pascalduez)
 
 
 ## Licence
